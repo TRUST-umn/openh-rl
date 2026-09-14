@@ -105,7 +105,7 @@ def segment_guidewire(raw_image):
 
     binary_bool = binary > 0
     
-    cleaned = remove_small_objects(binary_bool, min_size=400)
+    cleaned = remove_small_objects(binary_bool, min_size=100)
     skeleton = skeletonize(cleaned)
 
     # cleaned_out = img.copy()

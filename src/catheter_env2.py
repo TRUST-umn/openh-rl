@@ -302,6 +302,9 @@ class CatheterEnv(gym.Env):
         obs, reward, terminated, truncated, info
         """
         self.current_step += 1
+        if self.current_tip[0] < 180:
+            self._bridge.get_logger().warn('Tip position too far left.')
+            action[0] += 0.5
         ins_rel, rot_rel = self._bridge.clamp_action(float(action[0]), float(action[1]))
         self._bridge.send_command(ins_rel, rot_rel)
         reached = self._bridge.spin_until(self._bridge.wait_done, MOTION_TIMEOUT)
@@ -649,7 +652,7 @@ class CatheterEnv(gym.Env):
                 'spline_points': np.zeros((self.max_spline_points, 2), dtype=np.float32),
             }
     
-    def visual_home_guidewire(self, home_x_threshold: float = 200.0):
+    def visual_home_guidewire(self, home_x_threshold: float = 240.0):
         self._bridge.get_logger().info("Starting Visual Homing Sequence...")
         
         while True:
@@ -712,7 +715,7 @@ if __name__ == "__main__":
 
 
     obs, info = gymEnv.reset()
-    obs, reward, terminated, truncated, info = gymEnv.step(np.array([2.0, 0.0]))
+    obs, reward, terminated, truncated, info = gymEnv.step(np.array([0.0, 0.0]))
 
 
 
