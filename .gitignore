@@ -1,2 +1,16 @@
 datasets/
 __pycache__/
+guidewire_pipeline*.png
+guidewire_result*.png
+
+/VFiles/
+
+*.bin
+step*.png
+
+events.out*
+
+
+*.zip
+*.jsonl
+*.png
